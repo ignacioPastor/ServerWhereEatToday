@@ -6,17 +6,13 @@ var NAME_COLLECTION = 'users';
 
 
 exports.getUsers = function(db){
-    console.log("userBackend--------------------------1");
     return new Promise((fulfill, reject) => {
-    console.log("userBackend--------------------------2");
          db.collection('users').find({}).toArray(function(err, docs){
-    console.log("userBackend--------------------------3");
             console.log("docs");
             console.log(docs);
             docs.forEach(function(doc){
                 console.log(doc.title);
             });
-    console.log("userBackend--------------------------4");
             fulfill(docs);
         });
     })

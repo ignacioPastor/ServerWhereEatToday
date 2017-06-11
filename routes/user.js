@@ -35,23 +35,16 @@ var MongoClient = require('mongodb').MongoClient,
     assert = require('assert');
 
 router.get('/', function(req, res) {
-    console.log("user.js----------------1");
     MongoClient.connect('mongodb://localhost:27017/where-eat-today', function(err, db){
-    console.log("user.js----------------2");
         assert.equal(null, err);
         console.log("Successfully connected to server");
         userBackend.getUsers(db).then(users => {
-    console.log("user.js----------------3");
             db.close();
-    console.log("user.js----------------4");
             res.json(users);
         })
         .catch(error => {
-    console.log("user.js----------------5"); 
             res.status(500).end(error);
         });
-        
-        console.log("Called find()");
     });
 });
 
