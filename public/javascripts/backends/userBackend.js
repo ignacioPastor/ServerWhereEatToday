@@ -6,16 +6,35 @@ var NAME_COLLECTION = 'users';
 
 
 exports.getUsers = function(db){
+    console.log("userBackend-------------------1");
+    //console.log(db);
+    console.log("userBackend-------------------2");
     return new Promise((fulfill, reject) => {
+    console.log("userBackend-------------------3");
          db.collection('users').find({}).toArray(function(err, docs){
+    console.log("userBackend-------------------4");
             console.log("docs");
             console.log(docs);
             docs.forEach(function(doc){
-                console.log(doc.title);
+    console.log("userBackend-------------------5");
+                console.log(doc);
+                console.log(name);
             });
+    console.log("userBackend-------------------6");
+            if(err){
+                console.log("USERBACKEND ERROR_1");
+            }else{
+                console.log("USERBACKEND ERROR_2");
+
+            }
             fulfill(docs);
+        }).catch(err => {
+            console.log("Error----------------------------1");
         });
-    })
+    }).catch(reject => {
+            console.log("Error----------------------------2");
+            console.log(reject);
+    });
 }
 
 //Function to get all the clients from the database

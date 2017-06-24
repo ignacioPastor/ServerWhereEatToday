@@ -7,9 +7,17 @@ var bodyParser = require('body-parser');
 
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/where-eat-today');
+//var db = monk('localhost:27017/where-eat-today');
 
+var MongoClient = require('mongodb').MongoClient,
+    assert = require('assert');
 
+var db;
+MongoClient.connect('mongodb://localhost:27017/where-eat-today', function(err, database){
+        assert.equal(null, err);
+        console.log("Successfully connected to server");
+        db = database;
+    });
 
 
 // var index = require('./routes/index');
@@ -33,11 +41,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(errorHandler);
+
 // Make our db accessible to our router
+console.log("app.js--------------------2");
+var myRes;
 app.use(function(req,res,next){
+console.log("app.js--------------------3");
     req.db = db;
+    myRes = res;
     next();
 });
+
+// process.on('uncaughtException', function(err) {
+//     // handle the error safely
+//     console.log("11111111111111111111");
+//     // console.log(err)
+//     // console.log("2222222222222222");
+//     //console.log(myRes);
+//     myRes.status(502).end(err.toString());
+// })
 
 // app.use('/', index);
 app.use('/user', user);
